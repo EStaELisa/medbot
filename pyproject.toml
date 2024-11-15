@@ -1,0 +1,12 @@
+# ==== pytest ====
+[tool.pytest.ini_options]
+minversion = "6.0"
+python_files = [
+    "tests.py",
+    "test_*.py",
+]
+
+# ==== black ====
+[tool.black]
+line-length = 119
+target-version = ['py312']
