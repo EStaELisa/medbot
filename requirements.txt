@@ -1,0 +1,12 @@
+# Testing
+# ------------------------------------------------------------------------------
+pytest==8.2.2  # https://github.com/pytest-dev/pytest
+flake8==7.0.0  # https://pypi.org/project/flake8/
+
+# Code Style
+# ------------------------------------------------------------------------------
+black==24.4.2  # https://pypi.org/project/black/
+
+# Code quality
+# ------------------------------------------------------------------------------
+coverage==7.5.4  # https://github.com/nedbat/coveragepy
