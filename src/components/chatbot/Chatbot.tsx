@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Header from '../header/Header';
 
 
 const Chatbot = () => {
@@ -12,7 +13,9 @@ const Chatbot = () => {
     };
 
     return (
-        <div>Chatbot</div>
+        <div>
+            <Header/>
+        </div>
     )
 }
 

@@ -1,0 +1,10 @@
+.header{
+    box-sizing: border-box;
+    background-color: hotpink;
+    color: whitesmoke;
+    font-size: 30px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
