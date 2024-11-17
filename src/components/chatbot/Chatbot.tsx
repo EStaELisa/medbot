@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from 'react';
+import styles from './Chatbot.module.css'
 import Header from '../header/Header';
+import Body from '../body/Body';
 
 
 const Chatbot = () => {
@@ -13,8 +15,9 @@ const Chatbot = () => {
     };
 
     return (
-        <div>
+        <div className={styles['chatbot']}>
             <Header/>
+            <Body></Body>
         </div>
     )
 }
