@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from './body.module.css'
 import ChatMessages from '../chatMessages/ChatMessages'
-import { timeStamp } from 'console'
 
 const Body = () => {
   const messages = [
