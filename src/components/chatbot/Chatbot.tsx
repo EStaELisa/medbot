@@ -18,6 +18,7 @@ const Chatbot = () => {
     return (
         <div className={styles['chatbot']}>
             <Header/>
+            <Body/>
             <Input/>
         </div>
     )
