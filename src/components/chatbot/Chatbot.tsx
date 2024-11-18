@@ -4,6 +4,7 @@ import { useState } from 'react';
 import styles from './Chatbot.module.css'
 import Header from '../header/Header';
 import Body from '../body/Body';
+import Input from '../input/Input';
 
 
 const Chatbot = () => {
@@ -17,7 +18,7 @@ const Chatbot = () => {
     return (
         <div className={styles['chatbot']}>
             <Header/>
-            <Body></Body>
+            <Input/>
         </div>
     )
 }
