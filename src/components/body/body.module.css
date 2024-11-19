@@ -1,15 +1,10 @@
 .chatContainer {
     display: flex;
     flex-direction: column;
-    height: 90vh;
+    /* height: 90vh; */
 }
   
 .messageContainer {
     flex: 1;
     overflow-y: auto;
-}
-  
-.inputContainer {
-    background-color: #fff;
-    border-top: 1px solid #ccc;
 }
