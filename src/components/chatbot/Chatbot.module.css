@@ -1,3 +1,33 @@
-/* .chatbot{
-    background-color: white;
-} */
+.chatbot{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: space-between;
+    height: 100vh;
+}
+
+.header{
+    flex: 0 0 auto;
+}
+
+.chatContainer{
+    flex: 1;
+    overflow-y: auto;
+}
+
+.inputContainer{
+    border-top: 1px solid #ccc;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex: 0 0 auto;
+}
+
+.input{
+    flex: 1;
+}
+
+.button{
+    margin-left: 5px;
+}

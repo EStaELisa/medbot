@@ -8,6 +8,13 @@ const Body = () => {
     { sender: 'Me', content: 'Hello', timeStamp: Date.now(), isOutgoing: true},
     { sender: 'MedChat', content: 'Hello! How can I help you?', timeStamp: Date.now(), isOutgoing: false},
     { sender: 'Me', content: 'I just want to chat!', timeStamp: Date.now(), isOutgoing: true},
+    { sender: 'Me', content: 'Hello', timeStamp: Date.now(), isOutgoing: true},
+    { sender: 'MedChat', content: 'Hello! How can I help you?', timeStamp: Date.now(), isOutgoing: false},
+    { sender: 'Me', content: 'I just want to chat!', timeStamp: Date.now(), isOutgoing: true},
+    { sender: 'Me', content: 'Hello', timeStamp: Date.now(), isOutgoing: true},
+    { sender: 'MedChat', content: 'Hello! How can I help you?', timeStamp: Date.now(), isOutgoing: false},
+    { sender: 'Me', content: 'I just want to chat!', timeStamp: Date.now(), isOutgoing: true},
+    
   ]
 
   return (
