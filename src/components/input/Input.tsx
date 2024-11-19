@@ -1,11 +1,15 @@
 import React from 'react'
 import styles from './input.module.css'
 
-const Input = () => {
+type props = {
+  onChangeRequestHandler: (event:any) => void
+}
+
+const Input = (props:props) => {
   return (
     <div>
         <form>
-            <input className={styles['input']}/>
+            <input className={styles['input']} onChange={event => {props.onChangeRequestHandler(event)}}/>
         </form>
     </div>
   )

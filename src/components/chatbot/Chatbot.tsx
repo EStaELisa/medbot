@@ -6,15 +6,35 @@ import Header from '../header/Header';
 import Body from '../body/Body';
 import Input from '../input/Input';
 import InputButton from '../inputButton/InputButton';
+import { timeStamp } from 'console';
 
 
 const Chatbot = () => {
-    // const [messages, setMessages] = useState([]);
-    // const [newMessage, setNewMessage] = useState('');
+    const [messages, setMessages] = useState([
+        {sender: 'MedChat', content: 'Hello! What may I do for you?', timeStamp: Date.now(), isOutgoing: false},
+    ]);
+    const [newMessageText, setNewMessageText] = useState("");
 
-    // const submitNewMessage = async () => {
-    //     // Logik zum Senden der Nachricht an die API
-    // };
+    const onChangeRequestHandler = (event:any) => {
+        setNewMessageText(event.target.value);
+    }
+
+    const onClickHandler = () => {
+        if (newMessageText.trim() === ""){
+            return;
+        }
+
+        const newMessage = {
+            sender: "Me",
+            content: newMessageText,
+            timeStamp: Date.now(),
+            isOutgoing: true
+        };
+
+        setMessages((prevMessages) => [... prevMessages, newMessage])
+        setNewMessageText("");
+        //TODO: add response
+    }
 
     return (
         <div className={styles['chatbot']}>
@@ -22,14 +42,14 @@ const Chatbot = () => {
                 <Header/>
             </div>
             <div className={styles['chatContainer']}>
-                <Body/>
+                <Body messages={messages}/>
             </div>
                 <div className={styles['inputContainer']}>
                     <div className={styles['input']}>
-                        <Input/>
+                        <Input onChangeRequestHandler={onChangeRequestHandler}/>
                     </div>
                     <div className={styles['button']}>
-                        <InputButton/>
+                        <InputButton onClickHandler={onClickHandler}/>
                     </div>
                 </div>
         </div>

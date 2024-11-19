@@ -1,10 +1,14 @@
 import React from 'react'
 import styles from './inputButton.module.css'
 
-const InputButton = () => {
+type props = {
+  onClickHandler: () => void
+}
+
+const InputButton = (props:props) => {
   return (
     <div>
-        <button className={styles['button']}>
+        <button className={styles['button']} onClick={() => props.onClickHandler()}>
             <img className={styles['icon']} src={'/arrow.png'}/>
         </button>
     </div>
