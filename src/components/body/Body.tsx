@@ -17,9 +17,6 @@ const Body = () => {
           <ChatMessages key={idx} sender={msg.sender} content={msg.content} timestamp={msg.timeStamp} isOutgoing={msg.isOutgoing}/>
         ))}
       </div>
-      <div className={styles['inputContainer']}>
-        <Input/>
-      </div>
     </div>
   )
 }

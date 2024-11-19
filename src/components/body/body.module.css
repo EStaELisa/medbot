@@ -8,8 +8,3 @@
     flex: 1;
     overflow-y: auto;
 }
-  
-.inputContainer {
-    background-color: #fff;
-    border-top: 1px solid #ccc;
-}
