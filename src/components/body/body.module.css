@@ -1,17 +1,17 @@
 .chatContainer {
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Volle Höhe des Viewports */
+    height: 100vh;
 }
   
 .messageContainer {
-    flex: 1; /* Nimmt den verfügbaren Platz ein */
-    overflow-y: auto; /* Ermöglicht das Scrollen, wenn die Nachrichten zu viele sind */
-    padding: 10px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 0px;
 }
   
 .inputContainer {
-    padding: 10px; /* Abstand um das Eingabefeld */
-    background-color: #fff; /* Hintergrundfarbe für das Eingabefeld */
-    border-top: 1px solid #ccc; /* Trennlinie oben */
+    padding: 0px;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
 }

@@ -19,7 +19,6 @@ const Chatbot = () => {
         <div className={styles['chatbot']}>
             <Header/>
             <Body/>
-            <Input/>
         </div>
     )
 }
