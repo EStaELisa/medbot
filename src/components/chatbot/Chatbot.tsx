@@ -5,6 +5,7 @@ import styles from './Chatbot.module.css'
 import Header from '../header/Header';
 import Body from '../body/Body';
 import Input from '../input/Input';
+import InputButton from '../inputButton/InputButton';
 
 
 const Chatbot = () => {
@@ -19,6 +20,7 @@ const Chatbot = () => {
         <div className={styles['chatbot']}>
             <Header/>
             <Body/>
+            <InputButton/>
         </div>
     )
 }
