@@ -4,7 +4,7 @@ import torch
 import json
 
 # Load dataset
-data_path = "/workspaces/medbot/question_dataset.json"
+data_path = "question_dataset.json"
 with open(data_path, "r") as f:
     dataset = json.load(f)
 

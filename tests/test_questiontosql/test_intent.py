@@ -35,7 +35,12 @@ def run_tests():
         "I have fever and chills, what could it be?",
         "What might cause shortness of breath and nausea?",
         "Tell me the symptoms of influenza.",
-        "I am experiencing chills and a headache, what might it mean?"
+        "I am experiencing chills and a headache, what might it mean?",
+        "My patient suffers from headache, could you provide me with a diagnose?",
+        "What diagnose can be made for a patient with fever and cough?",
+        "I was diagnosed with Huntingtons disease, what can I expect?",
+        "I have Huntingtons disease, what can I expect?",
+        "May patint has lung cancer what will he exprience?",
     ]
 
     for query in test_queries:
