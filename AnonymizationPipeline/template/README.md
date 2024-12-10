@@ -130,7 +130,7 @@ python -m pip install -r min_req.txt
 
 Once you have the environment setup, you can run the pipeline with:
 ```bash
-python pipeline.py [ARGS]
+python pipelineOLD.py [ARGS]
 ```
 
 # Usage
@@ -164,7 +164,7 @@ optional arguments:
 
 Example:
 ```bash
-python pipeline.py -i example_input/plain_text/frases.txt -m models/ca_anonimization_core_lg models/xx_ent_wiki_sm -f plain -a intelligent -o output/output_test.jsonl -t spacy spacy
+python pipelineOLD.py -i example_input/plain_text/frases.txt -m models/ca_anonimization_core_lg models/xx_ent_wiki_sm -f plain -a intelligent -o output/output_test.jsonl -t spacy spacy
 ```
 
 The details about the functioning of each argument and the formats of the input and output files are detailed below. 
