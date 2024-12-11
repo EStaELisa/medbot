@@ -3,12 +3,12 @@ import re
 from sklearn.preprocessing import LabelEncoder
 
 # Loading all datasets datasets
-patients_df = pd.read_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\patients.csv")
-admissions_df = pd.read_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\admissions.csv")
-icd_diagnoses_df = pd.read_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\icd_diagnoses.csv")
-icd_procedures_df = pd.read_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\icd_procedures.csv")
-nhs_diseases_df = pd.read_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\nhs_diseases.csv")
-disease_symptoms_df = pd.read_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\disease_symptoms.csv")
+patients_df = pd.read_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\raw data\patients.csv")
+admissions_df = pd.read_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\raw data\admissions.csv")
+icd_diagnoses_df = pd.read_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\raw data\icd_diagnoses.csv")
+icd_procedures_df = pd.read_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\raw data\icd_procedures.csv")
+nhs_diseases_df = pd.read_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\raw data\nhs_diseases.csv")
+disease_symptoms_df = pd.read_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\raw data\disease_symptoms.csv")
 
 # MIMIC DATASET
 # Step 1: Merging Patients + Admissions
@@ -111,3 +111,40 @@ merged_nhs_df.to_csv(merged_nhs_output_path, index=False)
 print(f'Cleaned NHS Diseases dataset saved to: {merged_nhs_output_path}')
 
 
+
+
+# SPLITTING DATA INTO TRAINING AND TEST DATA
+
+from sklearn.model_selection import train_test_split
+
+# for theMIMIC dataset
+# setting diagnosis as the target variable
+X_mimic = merged_data.drop(columns=['DIAGNOSIS']) # features
+y_mimic = merged_data['DIAGNOSIS']
+
+# splitting the mimic dataset
+X_train_mimic, X_test_mimic, y_train_mimic, y_test_mimic = train_test_split(X_mimic, y_mimic, test_size=0.2, random_state=42)
+
+# saving split MIMIC data
+X_train_mimic.to_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\X_train_mimic.csv", index=False)
+X_test_mimic.to_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\X_test_mimic.csv", index=False)
+y_train_mimic.to_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\y_train_mimic.csv", index=False)
+y_test_mimic.to_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\y_test_mimic.csv", index=False)
+
+print("MIMIC dataset split with 'DIAGNOSIS' as target and saved successfully.")
+
+# for NHS dataset
+# setting disease_cleaned as the target variable
+
+X_nhs = merged_nhs_df.drop(columns=['disease_cleaned']) # features
+y_nhs = merged_nhs_df['disease_cleaned'] # target
+
+# splitting NHS dataset
+X_train_nhs, X_test_nhs, y_train_nhs, y_test_nhs = train_test_split(X_nhs, y_nhs, test_size=0.2, random_state=42)
+
+# saving split NHS data
+X_train_nhs.to_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\X_train_nhs.csv", index=False)
+X_test_nhs.to_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\X_test_nhs.csv", index=False)
+y_train_nhs.to_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\y_train_nhs.csv", index=False)
+y_test_nhs.to_csv(r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\y_test_nhs.csv", index=False)
+print('NHS dataset split with disease as target and saved successfully.')
