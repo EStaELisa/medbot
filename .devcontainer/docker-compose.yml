@@ -14,7 +14,7 @@ services:
       PGHOST: db
       PGPORT: 5432
     # Overrides default command so things don't shut down after the process ends.
-    command: sleep infinity
+    command: python3 workspaces/test.py
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
     network_mode: service:db
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
