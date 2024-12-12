@@ -3,7 +3,6 @@ import random
 
 faker = Faker()
 
-
 def generate_varied_sentence():
     name = faker.name()
     company = faker.company()
@@ -35,9 +34,7 @@ def generate_varied_sentence():
 
 
 def prepare_sentence(sentence):
-    s = sentence[:-1]
-    s = s.replace(",", " ")
-    words = s.split()
+    words = sentence.split()
     return words
 
 
@@ -60,6 +57,8 @@ def annotate_sentence(sentence, name, company, city, email, phone):
         label = "0"
         for entity_type, entity in word_entities.items():
             if word in entity.split():
+                label = entity_type
+            elif word[:-1] in entity.split():
                 label = entity_type
                 break
         annotations.append((word, label))
@@ -84,11 +83,40 @@ def write_to_file(annotated_data, file_name):
             f.write("\n")
 
 
+def process_file(input_filename, output_name):
+    with open(input_filename, 'r') as infile, open(output_name, 'w') as outfile:
+        prev_lable = "0"
+        entity_parts = []
+
+        for line in infile:
+            if line.strip() == "":
+                if entity_parts:
+                    outfile.write(f"{' '.join(entity_parts)} {prev_lable}\n")
+                    entity_parts = []
+                outfile.write("\n")
+                continue
+
+            word, label = line.strip().split()
+            if label == prev_lable and label != "0":
+                entity_parts.append(word)
+            else:
+                if entity_parts:
+                    outfile.write(f"{' '.join(entity_parts)} {prev_lable}\n")
+                    entity_parts = []
+                if label != "0":
+                    entity_parts.append(word)
+                else:
+                    outfile.write(f"{word} {label}\n")
+            prev_lable = label
+        if entity_parts:
+            outfile.write(f"{' '.join(entity_parts)} {prev_lable}\n")
+
 if __name__ == "__main__":
-    data = [generate_varied_sentence() for _ in range(10)]
+    data = [generate_varied_sentence() for _ in range(1000)]
     annotated_data = []
     for sentence, name, company, city, email, phone in data:
         annotated_sentence = annotate_sentence(sentence, name, company, city, email, phone)
         annotated_data.append(annotated_sentence)
 
-    write_to_file(annotated_data, "ner_train_data.txt")
+    write_to_file(annotated_data, "ner_train_data_raw.txt")
+    process_file("ner_train_data_raw.txt", "ner_train_data_processed.txt")
