@@ -1,34 +1,32 @@
 
 
-# Eingabedaten einlesen
+from transformers import AutoTokenizer, AutoModelForTokenClassification, TrainingArguments, Trainer, pipeline
+from datasets import load_dataset
+from transformers import DataCollatorForTokenClassification
+from AnonymizationPipeline.NERModelTrainer import NERModelTrainer
 
-# Beispieltext
-text = "John Doe lives in Berlin and works for OpenAI. His phone number is 123-456-7890."
+# Beispielanwendung
+if __name__ == "__main__":
+    label_list = ["O", "B-PER", "I-PER", "B-EMAIL", "B-PHONE"]
+    data_files = {
+        "train": "path_to_train.txt",
+        "test": "path_to_test.txt"
+    }
 
-# Model laden
+    trainer = NERModelTrainer(
+        model_name="xlm-roberta-large-finetuned-conll03-english",
+        label_list=label_list,
+        data_files=data_files
+    )
 
-from transformers import pipeline
+    trainer.load_data()
+    trainer.train(output_dir="./results", num_train_epochs=3)
+    trainer.save_model("./finetuned_model")
 
-# NER-Pipeline mit dem Modell laden
-ner_pipeline = pipeline(
-    "ner",
-    model="xlm-roberta-large-finetuned-conll03-english",
-    tokenizer="xlm-roberta-large-finetuned-conll03-english",
-    grouped_entities=True  # Gruppiert zusammenhängende Entitäten
-)
+    # Nach dem Training
+    trainer.load_trained_model("./finetuned_model")
+    text = "John Doe lives in Berlin and works for OpenAI. His phone number is 123-456-7890."
+    entities = trainer.infer(text)
 
-# TrueCaser - Groß/Kleinschreibung wird normalisiert
-
-# Sensible Daten identifizieren
-
-# Anonymisierung
-
-# Named Entity Recognition ausführen
-entities = ner_pipeline(text)
-
-# Ergebnis speichern
-
-# Ergebnisse anzeigen
-for entity in entities:
-    print(f"Entity: {entity['word']}, Label: {entity['entity_group']}, Score: {entity['score']:.2f}")
-
+    for entity in entities:
+        print(f"Entity: {entity['word']}, Label: {entity['entity_group']}, Score: {entity['score']:.2f}")
