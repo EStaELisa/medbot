@@ -13,20 +13,19 @@ label_map = {"get_symptoms": 0, "get_diagnose": 1}
 texts = [item["query"] for item in dataset]
 labels = [label_map[item["intent"]] for item in dataset]
 
-# Split dataset BEFORE tokenizing
+# Split dataset before tokenizing
 train_texts, val_texts, train_labels, val_labels = train_test_split(
     texts, labels, test_size=0.2, random_state=42
 )
 
 # Tokenize separately for train and validation sets
+# truncation=True and padding=True to ensure all sequences have the same length
 tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 train_encodings = tokenizer(train_texts, truncation=True, padding=True, max_length=128, return_tensors="pt")
 val_encodings = tokenizer(val_texts, truncation=True, padding=True, max_length=128, return_tensors="pt")
 
-# Custom Dataset Class
 
-
-class IntentDataset(torch.utils.data.Dataset):
+class IntentDataset(torch.utils.data.Dataset):  # Class to make dataset compatible with PyTorch
     def __init__(self, encodings, labels):
         self.encodings = encodings
         self.labels = labels

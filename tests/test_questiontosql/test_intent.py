@@ -1,6 +1,5 @@
 import torch
 from transformers import BertForSequenceClassification, BertTokenizer
-import json
 
 # Load the saved model and tokenizer
 MODEL_PATH = "./saved_model"
