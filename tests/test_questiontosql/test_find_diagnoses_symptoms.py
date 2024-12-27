@@ -11,6 +11,8 @@ print("Model and tokenizer loaded successfully.")
 id_to_label = {0: "O", 1: "B-ENTITY", 2: "I-ENTITY"}
 
 # Function to predict NER tags
+
+
 def predict(text):
     inputs = tokenizer(text, return_tensors="pt", truncation=True, padding="max_length", max_length=128)
     outputs = model(**inputs)
@@ -57,6 +59,8 @@ def predict(text):
         ("Nausea and vomiting are common symptoms.", [("nausea", "B-ENTITY"), ("vomiting", "B-ENTITY")]),
         ("I suspect the patient has diabetes.", [("diabetes", "B-ENTITY")]),
         ("The person exhibits chills and fatigue.", [("chills", "B-ENTITY"), ("fatigue", "B-ENTITY")]),
+        ("I have fever. What could be the diagnose?", [("fever", "B-ENTITY")]),
+        ("What are the symptoms of pneumonia?", [("pneumonia", "B-ENTITY")])
     ],
 )
 def test_predict(test_text, expected):
@@ -65,4 +69,3 @@ def test_predict(test_text, expected):
     result_tokens = [(token.lower(), label) for token, label in result]
     expected_tokens = [(token.lower(), label) for token, label in expected]
     assert result_tokens == expected_tokens
-
