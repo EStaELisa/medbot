@@ -1,19 +1,14 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForTokenClassification, BertForSequenceClassification, BertTokenizer
+from questiontosql.transform_prediction_symp_dia import predict, transform_predictions
 
 # **Intent-Model**
 MODEL_PATH_INTENT = "./saved_model"
 intent_model = BertForSequenceClassification.from_pretrained(MODEL_PATH_INTENT)
 intent_tokenizer = BertTokenizer.from_pretrained(MODEL_PATH_INTENT)
 
-# **NER-Model**
-MODEL_PATH_NER = "./ner_model"
-ner_model = AutoModelForTokenClassification.from_pretrained(MODEL_PATH_NER)
-ner_tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH_NER)
-
-# **Label-mappings**
+# **Label-mapping intent**
 intent_label_map = {"get_symptoms": 0, "get_diagnose": 1}
-id_to_label_ner = {0: "O", 1: "B-ENTITY", 2: "I-ENTITY"}
 
 # **Intent-Prediction**
 
@@ -30,35 +25,19 @@ def predict_intent(query):
 
 
 def extract_entities(query):
-    inputs = ner_tokenizer(query, return_tensors="pt", truncation=True, padding="max_length", max_length=128)
-    outputs = ner_model(**inputs)
-    predictions = outputs.logits.argmax(dim=2)
-    tokens = ner_tokenizer.convert_ids_to_tokens(inputs["input_ids"][0])
+    """
+    Extract entities from a query using NER predictions.
 
-    result = []
-    current_entity = ""
-    current_label = None
+    Args:
+        query (str): The input query.
 
-    for token, prediction in zip(tokens, predictions[0].numpy()):
-        if token in ["[CLS]", "[SEP]", "[PAD]"]:
-            continue
-        label = id_to_label_ner[prediction]
+    Returns:
+        List[str]: A list of extracted entities.
+    """
+    predictions = predict(query)
+    structured_data = transform_predictions(predictions)
+    return [entity["text"] for entity in structured_data["entities"]]
 
-        # Merge subtokens
-        if token.startswith("##"):
-            current_entity += token[2:]
-        else:
-            if current_entity:
-                result.append((current_entity, current_label))
-            current_entity = token
-            current_label = label
-
-    if current_entity:
-        result.append((current_entity, current_label))
-
-    # Filter out non-entities
-    result = [(entity, label) for entity, label in result if label != "O"]
-    return [entity for entity, _ in result]  # entity name
 
 # **SQL-generation**
 
@@ -84,16 +63,25 @@ def generate_sql(intent, entities):
 
 
 def handle_query(query):
-    # get intent
+    """
+    Handles a query by predicting intent, extracting entities, and generating SQL.
+
+    Args:
+        query (str): The input query.
+
+    Returns:
+        str: Generated SQL query or an error message.
+    """
+    # Predict intent
     intent = predict_intent(query)
     if intent not in ["get_symptoms", "get_diagnose"]:
-        return "Unbekannter Intent. Die Anfrage kann nicht verarbeitet werden."
+        return "Unknown intent. Query cannot be precessed."
 
-    # get entities
+    # Extract entities
     entities = extract_entities(query)
     if not entities:
-        return "Keine Entitäten gefunden."
+        return "No entity found."
 
-    # SQL generation
+    # Generate SQL
     sql_query = generate_sql(intent, entities)
     return sql_query
