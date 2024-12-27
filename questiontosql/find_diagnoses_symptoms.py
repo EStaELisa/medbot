@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 import json
 
 # Load dataset
-data_path = "question_dataset.json"
+data_path = "symptom_diagnosis_dataset.json"
 with open(data_path, "r") as f:
     dataset = json.load(f)
 
@@ -25,9 +25,9 @@ def prepare_data(data):
             entity_tokens = tokenizer.tokenize(entity)
             for i in range(len(tokens) - len(entity_tokens) + 1):
                 if tokens[i:i+len(entity_tokens)] == entity_tokens:
-                    labels[i] = f"B-{label}"
+                    labels[i] = "B-ENTITY"
                     for j in range(1, len(entity_tokens)):
-                        labels[i+j] = f"I-{label}"
+                        labels[i+j] = "I-ENTITY"
 
         tokenized_data.append({"tokens": tokens, "labels": labels})
     return tokenized_data
@@ -36,7 +36,7 @@ def prepare_data(data):
 prepared_data = prepare_data(dataset)
 
 # Convert labels to indices
-label_to_id = {"O": 0, "B-SYMPTOM": 1, "I-SYMPTOM": 2, "B-DIAGNOSE": 3, "I-DIAGNOSE": 4}
+label_to_id = {"O": 0, "B-ENTITY": 1, "I-ENTITY": 2}
 id_to_label = {v: k for k, v in label_to_id.items()}
 
 for item in prepared_data:

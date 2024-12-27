@@ -33,7 +33,6 @@ DIAGNOSES = [
     "ovarian cancer", "breast cancer", "prostate cancer", "testicular cancer"
 ]
 
-
 # get_symptoms
 QUERY_TEMPLATES_DIAGNOSES = [
     "What are the symptoms of {}?",
@@ -74,8 +73,8 @@ QUERY_TEMPLATES_DIAGNOSES = [
     "What are the symptoms of someone with {}?",
     "What might I experience with {}?",
     "What are the symptoms of a person with {}?",
-
 ]
+
 # get diagnose
 QUERY_TEMPLATES_SYMPTOMS = [
     "What might cause {}?",
@@ -119,10 +118,8 @@ QUERY_TEMPLATES_SYMPTOMS = [
     "What are the possible diseases for a patient with {}?",
 ]
 
-# generate random dataset with intent
-
-
-def generate_dataset_with_intent(num_entries=1000):
+# generate random dataset without intent
+def generate_dataset(num_entries=1000):
     dataset = []
     for _ in range(num_entries // 2):  # half symptoms, half diagnoses
         # symptoms
@@ -130,8 +127,7 @@ def generate_dataset_with_intent(num_entries=1000):
         query = random.choice(QUERY_TEMPLATES_SYMPTOMS).format(symptom)
         dataset.append({
             "query": query,
-            "intent": "get_diagnose",
-            "entities": [(symptom, "SYMPTOM")]
+            "entities": [(symptom, "ENTITY")]
         })
 
         # diagnoses
@@ -139,17 +135,15 @@ def generate_dataset_with_intent(num_entries=1000):
         query = random.choice(QUERY_TEMPLATES_DIAGNOSES).format(diagnose)
         dataset.append({
             "query": query,
-            "intent": "get_symptoms",
-            "entities": [(diagnose, "DIAGNOSE")]
+            "entities": [(diagnose, "ENTITY")]
         })
     return dataset
 
-
 # generate dataset
-dataset = generate_dataset_with_intent(num_entries=2000)
+dataset = generate_dataset(num_entries=2000)
 
 # save dataset to file as JSON
-with open("symptom_diagnosis_dataset_with_intent.json", "w") as f:
+with open("symptom_diagnosis_dataset.json", "w") as f:
     json.dump(dataset, f, indent=4)
 
-print("Dataset with intent was generated and saved!")
+print("Dataset was generated and saved!")
