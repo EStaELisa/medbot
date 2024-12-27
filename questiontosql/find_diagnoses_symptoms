@@ -1,17 +1,16 @@
 from transformers import AutoTokenizer, AutoModelForTokenClassification, Trainer, TrainingArguments, DataCollatorForTokenClassification
+from datasets import Dataset
+from sklearn.model_selection import train_test_split
+import json
 
-# Beispiel-Daten
-data = [
-    {"query": "What are the symptoms of sepsis?", "entities": [("sepsis", "DIAGNOSE")]},
-    {"query": "What disease could nausea suggest?", "entities": [("nausea", "SYMPTOM")]},
-    {"query": "The patient has fever and chills.", "entities": [("fever", "SYMPTOM"), ("chills", "SYMPTOM")]},
-    {"query": "They might have pneumonia.", "entities": [("pneumonia", "DIAGNOSE")]}
-]
+# Load dataset
+data_path = "question_dataset.json"
+with open(data_path, "r") as f:
+    dataset = json.load(f)
 
-# Lade den Tokenizer
 tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 
-# Daten vorbereiten
+# Data preparation
 
 
 def prepare_data(data):
@@ -21,8 +20,8 @@ def prepare_data(data):
         tokens = tokenizer.tokenize(text)
         labels = ["O"] * len(tokens)
 
-        # Entitäten markieren
-        for entity, label in entry["entities"]:
+        # Mark entities
+        for entity, label in entry.get("entities", []):
             entity_tokens = tokenizer.tokenize(entity)
             for i in range(len(tokens) - len(entity_tokens) + 1):
                 if tokens[i:i+len(entity_tokens)] == entity_tokens:
@@ -34,9 +33,20 @@ def prepare_data(data):
     return tokenized_data
 
 
-prepared_data = prepare_data(data)
+prepared_data = prepare_data(dataset)
 
-# Konvertiere die Daten in ein Hugging Face Dataset
+# Convert labels to indices
+label_to_id = {"O": 0, "B-SYMPTOM": 1, "I-SYMPTOM": 2, "B-DIAGNOSE": 3, "I-DIAGNOSE": 4}
+id_to_label = {v: k for k, v in label_to_id.items()}
+
+for item in prepared_data:
+    item["labels"] = [label_to_id[label] for label in item["labels"]]
+
+# Split data into train and eval sets
+train_data, eval_data = train_test_split(prepared_data, test_size=0.2)
+
+train_dataset = Dataset.from_list(train_data)
+eval_dataset = Dataset.from_list(eval_data)
 
 
 def tokenize_and_align_labels(examples):
@@ -51,38 +61,26 @@ def tokenize_and_align_labels(examples):
     for i, label in enumerate(examples["labels"]):
         label_ids = []
         word_ids = tokenized_inputs.word_ids(batch_index=i)
-        previous_word_id = None
         for word_id in word_ids:
             if word_id is None:
                 label_ids.append(-100)
-            elif word_id != previous_word_id:
-                label_ids.append(label[word_id])
             else:
-                label_ids.append(label[word_id] if label[word_id].startswith("I-") else -100)
-            previous_word_id = word_id
+                label_ids.append(label[word_id])
         labels.append(label_ids)
     tokenized_inputs["labels"] = labels
     return tokenized_inputs
 
 
-# Konvertiere die Labels in Indizes
-label_to_id = {"O": 0, "B-SYMPTOM": 1, "I-SYMPTOM": 2, "B-DIAGNOSE": 3, "I-DIAGNOSE": 4}
-id_to_label = {v: k for k, v in label_to_id.items()}
+train_dataset = train_dataset.map(tokenize_and_align_labels, batched=True)
+eval_dataset = eval_dataset.map(tokenize_and_align_labels, batched=True)
 
-# Label in numerisches Format umwandeln
-for item in prepared_data:
-    item["labels"] = [label_to_id[label] for label in item["labels"]]
-
-dataset = Dataset.from_list(prepared_data)
-dataset = dataset.map(tokenize_and_align_labels, batched=True)
-
-# Lade das vortrainierte Modell
+# Load the pretrained model
 model = AutoModelForTokenClassification.from_pretrained("bert-base-uncased", num_labels=len(label_to_id))
 
-# Datenkollator
+# Data collator
 data_collator = DataCollatorForTokenClassification(tokenizer=tokenizer)
 
-# Trainingsargumente definieren
+# Training arguments
 training_args = TrainingArguments(
     output_dir="./ner_model",
     evaluation_strategy="epoch",
@@ -93,15 +91,19 @@ training_args = TrainingArguments(
     weight_decay=0.01
 )
 
-# Trainer initialisieren
+# Initialize Trainer
 trainer = Trainer(
     model=model,
     args=training_args,
-    train_dataset=dataset,
-    eval_dataset=dataset,
+    train_dataset=train_dataset,
+    eval_dataset=eval_dataset,
     tokenizer=tokenizer,
     data_collator=data_collator
 )
 
-# Modell trainieren
+# Train the model
 trainer.train()
+
+# Save the model and tokenizer
+model.save_pretrained("./ner_model")
+tokenizer.save_pretrained("./ner_model")
