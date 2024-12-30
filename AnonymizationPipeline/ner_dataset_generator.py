@@ -1,5 +1,5 @@
 import os.path
-
+from sklearn.model_selection import train_test_split
 from faker import Faker
 import random
 
@@ -170,8 +170,11 @@ if __name__ == "__main__":
         annotated_sentence = annotator.annotate_sentence(sentence, name, company, city, email, phone)
         all_annotated_data.append(annotated_sentence)
 
-    if not os.path.exists("data/ner_train_data_raw.txt") or not os.path.exists("data/ner_train_data_processed.txt"):
-        writer.write_to_file(all_annotated_data, "ner_train_data_raw.txt")
-        processor.process_file("ner_train_data_raw.txt", "ner_train_data_processed.txt")
+    train_data, test_data = train_test_split(
+        all_annotated_data, test_size=0.2, random_state=42
+    )
+    if not os.path.exists("data/ner_train_data.txt") or not os.path.exists("data/ner_test_data.txt"):
+        FileWriter.write_to_file(train_data, "data/ner_train_data.txt")
+        FileWriter.write_to_file(test_data, "data/ner_test_data.txt")
     else:
         print("Files already exist")
