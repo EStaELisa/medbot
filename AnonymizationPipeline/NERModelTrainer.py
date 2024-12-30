@@ -11,7 +11,7 @@ class NERModelTrainer:
         Initializes the model, tokenizer, and label mappings.
 
         :param model_name: Name of the pre-trained model.
-        :param label_list: List of labels (e.g., ['O', 'B-PER', 'I-PER', 'B-EMAIL', 'B-PHONE']).
+        :param label_list: List of labels (e.g., ['O', 'B-PER', 'I-PER', 'EMAIL', 'PHONE']).
         :param data_files: Paths to training and test data files.
         """
         self.model_name = model_name
