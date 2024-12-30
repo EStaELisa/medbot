@@ -2,6 +2,7 @@ import os
 from transformers import AutoTokenizer, AutoModelForTokenClassification, TrainingArguments, Trainer, pipeline
 from datasets import Dataset
 from transformers import DataCollatorForTokenClassification
+import torch
 
 
 class NERModelTrainer:
@@ -17,7 +18,16 @@ class NERModelTrainer:
         self.label_list = label_list
         self.data_files = data_files
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModelForTokenClassification.from_pretrained(model_name)
+        self.model = AutoModelForTokenClassification.from_pretrained(
+            self.model_name,
+            num_labels=len(self.label_list),  # Set the correct number of labels
+            ignore_mismatched_sizes=True  # Ignore size mismatches
+        )
+
+        # Reinitialize the classifier layer to match your label set
+        self.model.classifier = torch.nn.Linear(
+            self.model.config.hidden_size, len(self.label_list)
+        )
 
         # Setup label mappings
         self.id2label = {i: label for i, label in enumerate(label_list)}
