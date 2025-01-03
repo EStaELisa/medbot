@@ -1,5 +1,5 @@
 from typing import List, Tuple
-from transformers import pipeline
+from transformers import pipeline, AutoTokenizer, AutoModel
 
 class Span:
     """
@@ -150,7 +150,7 @@ if __name__ == "__main__":
     text = input()
 
     # Path to your fine-tuned model
-    model_path = "data/ner_finetuned_model"
+    model_path = "DeliaMo/ner_anonymization"
 
     # Instantiate and use the anonymizer
     anonymizer = NERAnonymizer(model_path)
