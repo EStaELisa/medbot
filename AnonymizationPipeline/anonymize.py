@@ -147,7 +147,7 @@ class NERAnonymizer:
 
 if __name__ == "__main__":
     # Example text
-    text = "John Doe lives in New York and works at Google. You can reach them via johndoe@google.com or +4911112239."
+    text = input()
 
     # Path to your fine-tuned model
     model_path = "data/ner_finetuned_model"
