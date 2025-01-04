@@ -69,7 +69,7 @@ class NERAnonymizer:
 
         Returns:
         List[dict]: A list of merged entities, where each entity is a dictionary
-                    containing its start, end, and text representation.
+                    containing its start, end, text representation, and confidence.
         """
         merged_entities = []
         current_entity = None
@@ -83,20 +83,33 @@ class NERAnonymizer:
             if not current_entity or token['entity'].startswith('B-') or current_entity['entity'] != entity_type:
                 # Start a new entity span
                 if current_entity:
+                    # Calculate average confidence for the merged entity
+                    current_entity['confidence'] = (
+                        sum(current_entity['confidence_scores']) / len(current_entity['confidence_scores'])
+                    )
+                    del current_entity['confidence_scores']  # Remove raw confidence scores
                     merged_entities.append(current_entity)
+
                 current_entity = {
                     'entity': entity_type,
                     'start': token['start'],
                     'end': token['end'],
-                    'text': token['word'].replace("##", "")
+                    'text': token['word'].replace("##", ""),
+                    'confidence_scores': [token['score']],  # Store confidence scores for merging
                 }
+
             else:
                 # Continue the current entity span
                 current_entity['end'] = token['end']
                 current_entity['text'] += token['word'].replace("##", "")
+                current_entity['confidence_scores'].append(token['score'])
 
         # Add the last entity
         if current_entity:
+            current_entity['confidence'] = (
+                sum(current_entity['confidence_scores']) / len(current_entity['confidence_scores'])
+            )
+            del current_entity['confidence_scores']
             merged_entities.append(current_entity)
 
         return merged_entities
@@ -104,6 +117,7 @@ class NERAnonymizer:
     def anonymize(self, text: str) -> str:
         """
         Anonymize the text by replacing identified entities with placeholders.
+        Also, print the confidence scores of detected entities.
 
         Args:
         text (str): The input text to anonymize.
@@ -118,13 +132,13 @@ class NERAnonymizer:
         offset = 0
         for entity in merged_entities:
             start, end = entity['start'] + offset, entity['end'] + offset
-            replacement = self._get_replacement(entity['entity'])
+            replacement = self._get_replacement(entity['entity'])  # Assume this maps entity types to placeholders
 
             # Replace the text and update offset
             text = text[:start] + replacement + text[end:]
             offset += len(replacement) - (end - start)
 
-        return text
+        return text, merged_entities
 
     def _get_replacement(self, entity_type: str) -> str:
         """
@@ -145,16 +159,12 @@ class NERAnonymizer:
         }
         return replacements.get(entity_type, '<ENTITY>')
 
-if __name__ == "__main__":
-    # Example text
-    text = input()
-
+def anonymize_prompt(text):
     # Path to your fine-tuned model
     model_path = "DeliaMo/ner_anonymization"
 
     # Instantiate and use the anonymizer
     anonymizer = NERAnonymizer(model_path)
-    anonymized_text = anonymizer.anonymize(text)
+    anonymized_text, entities = anonymizer.anonymize(text)
 
-    print("Original text:", text)
-    print("Anonymized text:", anonymized_text)
+    return anonymized_text, entities
