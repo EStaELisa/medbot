@@ -2,7 +2,7 @@ import torch
 from transformers import BertForSequenceClassification, BertTokenizer
 
 # Load the saved model and tokenizer
-MODEL_PATH = "./saved_model"
+MODEL_PATH = "DeliaMo/ner_intent"
 model = BertForSequenceClassification.from_pretrained(MODEL_PATH)
 tokenizer = BertTokenizer.from_pretrained(MODEL_PATH)
 
