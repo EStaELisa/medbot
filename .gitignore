@@ -4,6 +4,9 @@
 physionet.org/
 mimic-code-main
 mimic-code.zip
+results/
+saved_model/
+ner_model/
 
 ###############################################
 # Python
