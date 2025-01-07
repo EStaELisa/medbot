@@ -8,9 +8,9 @@ def main():
     model = BertForSequenceClassification.from_pretrained(model_path)
     tokenizer = BertTokenizer.from_pretrained(model_path)
 
-    text = "The patient Julia Meyer is suffering from fewer and chills, what could her diagnose be? Call her back at +491110020."
+    text = "The patient Julia Meyer is suffering from fewer and chills, what could her diagnose be? Call her back at +491110020"
     anon_text, entities = anonymize.anonymize_prompt(text)
-    print(anon_text)
+    anonymization_explanation.print_anon_text(anon_text)
     anonymization_explanation.explain_anonymization(entities)
 
     wrapper = intent_explanation.ModelWrapper(model, tokenizer, {"get_symptoms": 0, "get_diagnose": 1})

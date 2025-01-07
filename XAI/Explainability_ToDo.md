@@ -2,7 +2,7 @@
 - [X] Anzeigen, welche Entities gefunden wurden
 - [X] Confidence Scores für jede Entity anzeigen
 - [ ] Score erklären
-- [ ] (Ausgabe überarbeiten)
+- [x] (Ausgabe überarbeiten)
 Beispiel:
 ```
 Detected Entities and Confidence Scores:
@@ -11,8 +11,8 @@ Entity: 'Boston' | Type: <LOCATION> | Confidence: 0.89
 ```
 - [X] Anonymisierten String anzeigen
 # Intent Model
-- [ ] Wörter anzeigen, die für den Intent wichtig sind
-- [ ] Attention Maps / Saliency Maps, um anzuzeigen, auf welchen Teil des Inputs sich das Model fokussiert
+- [x] Wörter anzeigen, die für den Intent wichtig sind
+- [x] Attention Maps / Saliency Maps, um anzuzeigen, auf welchen Teil des Inputs sich das Model fokussiert
 - [ ] (Natural Language Summary)
 ## SQL-Query 
 - [ ] (SQL-Query anzeigen) und / oder dazu passenden Text
