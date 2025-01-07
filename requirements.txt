@@ -18,3 +18,9 @@ scikit-learn==1.5.2  # https://scikit-learn.org/stable/
 torch==2.5.0  # https://pytorch.org/
 transformers[torch]==4.47.0   # https://huggingface.co/transformers/
 datasets==3.2.0  # https://huggingface.co/docs/datasets/
+
+tqdm~=4.67.1
+pandas~=2.2.3
+Faker~=33.1.0
+babel~=2.16.0
+numpy~=2.1.3

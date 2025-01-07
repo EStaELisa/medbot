@@ -1,0 +1,36 @@
+FROM python:3.9-slim
+
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+RUN mkdir /home/anonym /home/anonym/data /home/anonym/sensitive_identification
+
+
+#COPY models /home/anonym/models
+
+
+WORKDIR /home/anonym
+
+
+RUN apt-get update && apt-get install -y unzip wget git
+
+#RUN wget -O models/main_model.zip https://www.dropbox.com/s/f9sv2s3adbffjzt/model_ca_core_lg_iris_05_31.zip\?dl\=1
+#RUN unzip -o models/main_model.zip -d ./models && rm models/main_model.zip
+
+COPY min_req.txt min_req_demo.txt /home/anonym/
+
+RUN python -m pip install --upgrade pip
+RUN python -m pip install -r min_req.txt
+RUN python -m pip install -r min_req_demo.txt
+
+COPY .streamlit /home/anonym/.streamlit
+COPY demo /home/anonym/demo
+
+COPY sensitive_identification /home/anonym/sensitive_identification/
+
+COPY data /home/anonym/data
+
+COPY demo.py pipeline.py anonymize.py meta.py ingestors.py /home/anonym/
+
+
+ENTRYPOINT ["streamlit", "run", "demo.py", "--server.address=0.0.0.0", "--server.port=8501"]
