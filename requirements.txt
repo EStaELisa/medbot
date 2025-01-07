@@ -18,14 +18,3 @@ scikit-learn==1.5.2  # https://scikit-learn.org/stable/
 torch==2.5.0  # https://pytorch.org/
 transformers[torch]==4.47.0   # https://huggingface.co/transformers/
 datasets==3.2.0  # https://huggingface.co/docs/datasets/
-
-# Spacy
-# ------------------------------------------------------------------------------
-# -e git+https://github.com/allenai/scispacy.git#egg=scispacy
-# https://github.com/allenai/scispacy/releases/download/v0.5.4/en_core_sci_sm-0.5.4.tar.gz
-# spacy==3.2.3  # https://spacy.io/
-# scispacy==0.5.5
-# stanza==1.10.1
-# medspacy==1.3.1
-# ## en_core_sci_sm==0.5.5
-# pydantic==1.10.8
