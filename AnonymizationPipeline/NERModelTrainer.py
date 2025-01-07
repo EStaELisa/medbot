@@ -190,7 +190,7 @@ class NERModelTrainer:
 
 if __name__ == "__main__":
     pretrained_model = "dbmdz/bert-large-cased-finetuned-conll03-english"
-    label_list = ["0", "B-PER", "I-PER", "ORG", "GPE", "EMAIL", "PHONE"]
+    label_list = ["0", "PER", "ORG", "GPE", "EMAIL", "PHONE"]
     data_files = {
         "train": "data/ner_train_data.txt",
         "test": "data/ner_test_data.txt"
