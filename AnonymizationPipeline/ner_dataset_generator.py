@@ -13,6 +13,7 @@ class SentenceGenerator:
         Initializes the SentenceGenerator class with a Faker instance to create fake data.
         """
         self.faker = Faker()
+        self.diseases = ["Covid 19", "Diabetes", "Hypertension", "Influenza", "Asthma", "Migraine", "Pneumonia"]
 
     def generate_varied_sentence(self):
         """
@@ -25,25 +26,26 @@ class SentenceGenerator:
         city = self.faker.city()
         email = self.faker.email()
         phone = self.faker.phone_number()
+        disease = random.choice(self.diseases)
         templates = [
-            f"{name} is a patient at {company} in {city} Contact them at {email} or {phone}",
+            f"{name} is a patient at {company} in {city}. They have a known history of {disease} and a fever of 40°C. Contact them at {email} or {phone}",
             f"Dr. {name} works at {company} located in {city} You can reach the doctor at {email} or {phone}",
-            f"{name} is scheduled for an appointment at {company} in {city} For inquiries, call {phone} or email {email}",
-            f"To discuss your test results contact {name} at {company} in {city} via {email} or {phone}",
-            f"Reach out to {name} at {company} in {city} for medical advice Email: {email} Phone: {phone}",
-            f"{name} from {company} in {city} is available for consultation at {email} or {phone}",
-            f"Patient {name} can be contacted through {company} in {city} at {email} or {phone}",
-            f"For further assistance, email {name} at {email} in {city} or call {phone}",
-            f"{name}'s medical records are at {company} in {city} Contact: {email} {phone}",
-            f"{name} has an appointment at {company} in {city} Confirm via {email} or call {phone}",
-            f"Please reach {name} at {company} in {city} for health concerns Email: {email} Phone: {phone}",
+            f"{name} is scheduled for an appointment at {company} in {city} They have irregular high blood preassure of 150/92 For inquiries, call {phone} or email {email}",
+            f"Your test results show a chortisol level of 240 mg/dL. contact {name} at {company} in {city} via {email} or {phone}",
+            f"If you have {disease} reach out to {name} at {company} in {city} for medical advice Email: {email} Phone: {phone}",
+            f"{name} from {company} in {city} is available for consultation of your {disease} at {email} or {phone}",
+            f"Patient {name} has a white blood cell count of 15000/uL can be contacted through {company} in {city} at {email} or {phone}",
+            f"For further assistance with your {disease}, email {name} at {email} in {city} or call {phone}",
+            f"{name} medical records are at {company} in {city} Contact: {email} {phone} They report to have {disease} and an A1C level of 8.5%.",
+            f"{name} has an appointment at {company} in {city} Confirm via {email} or call {phone} They have a BMI of 32 and a history of {disease}",
+            f"Please reach {name} at {company} in {city} for {disease} concerns Email: {email} Phone: {phone}",
             f"{name} from {company} in {city} can be contacted at {email} or {phone} for follow-up",
             f"Your next visit with {name} at {company} in {city} is scheduled. Contact: {email} {phone}",
-            f"Dr. {name} from {company} in {city} is available at {email} or {phone} for consultation",
-            f"{name}'s records at {company} in {city} can be accessed through {email} or {phone}",
+            f"Dr. {name} from {company} in {city} is available at {email} or {phone} for consultation and specializes in {disease}",
+            f"{name} records at {company} in {city} can be accessed through {email} or {phone} Their malaria test showed a parasite density of 0.8%",
             f"To reschedule, contact {name} at {company} in {city} via {email} or {phone}",
-            f"Reach out to {name} at {company} in {city} for test results Email: {email} Phone: {phone}",
-            f"For any medical inquiries, contact {name} at {company} in {city} via {email} or {phone}",
+            f"The patient {name} at {company} in {city} got a Mini-Mental-State exam score of 22. Contace them via {email} Phone: {phone} ",
+            f"{name} experienced a skin pH of 5.5, contact them at {company} in {city} via {email} or {phone}",
         ]
         sentence = random.choice(templates)
         return sentence, name, company, city, email, phone
@@ -70,11 +72,9 @@ class SentenceAnnotator:
 
         words = sentence.split()
         annotations = []
-        names = name.split()
 
         word_entities = {
-            'B-PER': names[0],
-            'I-PER': names[1],
+            'PER': name,
             'ORG': company,
             'GPE': city,
             'EMAIL': email,
@@ -175,6 +175,8 @@ if __name__ == "__main__":
     )
     if not os.path.exists("data/ner_train_data.txt") or not os.path.exists("data/ner_test_data.txt"):
         FileWriter.write_to_file(train_data, "data/ner_train_data.txt")
+        #processor.process_file("data/ner_train_data_raw.txt", "data/ner_train_data.txt")
         FileWriter.write_to_file(test_data, "data/ner_test_data.txt")
+        #processor.process_file("data/ner_test_data_raw.txt", "data/ner_test_data.txt")
     else:
         print("Files already exist")
