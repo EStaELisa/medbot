@@ -1,6 +1,7 @@
 # Anonymization Model
 - [X] Anzeigen, welche Entities gefunden wurden
 - [X] Confidence Scores für jede Entity anzeigen
+- [ ] Score erklären
 - [ ] (Ausgabe überarbeiten)
 Beispiel:
 ```
@@ -11,10 +12,10 @@ Entity: 'Boston' | Type: <LOCATION> | Confidence: 0.89
 - [X] Anonymisierten String anzeigen
 # Intent Model
 - [ ] Wörter anzeigen, die für den Intent wichtig sind
-- [ ] Attention Maps / Saliency Maps, um anzuzeigen,  auf welchen Teil des Inputs sich das Model fokussiert
+- [ ] Attention Maps / Saliency Maps, um anzuzeigen, auf welchen Teil des Inputs sich das Model fokussiert
 - [ ] (Natural Language Summary)
 ## SQL-Query 
-- [ ] SQL-Query anzeigen und / oder dazu passenden Text
+- [ ] (SQL-Query anzeigen) und / oder dazu passenden Text
 Beispiel:
 ```SQL
 SELECT symptoms FROM diseases WHERE disease = 'flu'; 
