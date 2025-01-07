@@ -3,7 +3,7 @@ from transformers import AutoTokenizer, AutoModelForTokenClassification, BertFor
 from questiontosql.transform_prediction_symp_dia import predict, transform_predictions
 
 # **Intent-Model**
-MODEL_PATH_INTENT = "./saved_model"
+MODEL_PATH_INTENT = "DeliaMo/ner_intent"
 intent_model = BertForSequenceClassification.from_pretrained(MODEL_PATH_INTENT)
 intent_tokenizer = BertTokenizer.from_pretrained(MODEL_PATH_INTENT)
 

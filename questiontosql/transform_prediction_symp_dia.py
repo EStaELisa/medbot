@@ -2,8 +2,8 @@ from transformers import AutoTokenizer, AutoModelForTokenClassification
 import torch
 
 # Load model and tokenizer
-model = AutoModelForTokenClassification.from_pretrained("./ner_model")
-tokenizer = AutoTokenizer.from_pretrained("./ner_model")
+model = AutoModelForTokenClassification.from_pretrained("DeliaMo/symptoms_diagnoses")
+tokenizer = AutoTokenizer.from_pretrained("DeliaMo/symptoms_diagnoses")
 print("Model and tokenizer loaded successfully.")
 
 # Label mapping
