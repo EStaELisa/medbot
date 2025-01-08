@@ -138,6 +138,20 @@ class NERAnonymizer:
             text = text[:start] + replacement + text[end:]
             offset += len(replacement) - (end - start)
 
+        for entity in merged_entities:
+            confidence = entity['confidence']
+
+            # Staffel die Erklärung je nach Confidence-Wert
+            if confidence > 0.9:
+                explanation = "The model is very confident."
+            elif confidence > 0.7:
+                explanation = "The model is somewhat confident, but there is some uncertainty."
+            else:
+                explanation = "The model is not very confident, this could be a random prediction."
+
+            # Füge die Erklärung hinzu
+            entity['confidence_explained'] = explanation
+
         return text, merged_entities
 
     def _get_replacement(self, entity_type: str) -> str:
