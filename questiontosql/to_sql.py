@@ -1,5 +1,7 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForTokenClassification, BertForSequenceClassification, BertTokenizer
+
+from XAI import anonymization_explanation, sql_explanation
 from questiontosql.transform_prediction_symp_dia import predict, transform_predictions
 
 # **Intent-Model**
@@ -84,4 +86,5 @@ def handle_query(query):
 
     # Generate SQL
     sql_query = generate_sql(intent, entities)
+    sql_explanation.output_sql(sql_query)
     return sql_query
