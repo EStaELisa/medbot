@@ -15,7 +15,7 @@ Entity: 'Boston' | Type: <LOCATION> | Confidence: 0.89
 - [ ] Attention Maps / Saliency Maps, um anzuzeigen, auf welchen Teil des Inputs sich das Model fokussiert
 - [ ] (Natural Language Summary)
 ## SQL-Query 
-- [ ] (SQL-Query anzeigen) und / oder dazu passenden Text
+- [ ] (SQL-Query anzeigen) und / oder dazu passenden Text - SQL to text Model einfügen 
 Beispiel:
 ```SQL
 SELECT symptoms FROM diseases WHERE disease = 'flu'; 
