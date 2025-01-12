@@ -213,7 +213,7 @@ nhs_data['Symptoms'] = nhs_data['symptom'].apply(extract_specific_symptoms)
 final_data = nhs_data[['disease','Symptoms']]
 
 # saving the results to a new file
-output_file_path = r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\nhs_symptoms_diseases_symptoms_processed_final.csv"
+output_file_path = r"C:\Users\zeine\OneDrive\Documents\Projektstudium II\nhs_disease_symptoms_processed_final.csv"
 final_data.to_csv(output_file_path, index=False)
 
 print(f"Keyword extraction completed. Results saved to :{output_file_path}")
