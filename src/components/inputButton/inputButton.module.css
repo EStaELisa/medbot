@@ -4,7 +4,7 @@
 }
 
 .button{
-    background-color: hotpink;
-    border-color: hotpink;
+    background-color: var(--header);
+    border-color: var(--header);
     border-radius: 20px;
 }
