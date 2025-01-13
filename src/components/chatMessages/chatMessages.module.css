@@ -1,8 +1,8 @@
-/* chatMessage.module.css */
 .message {
     padding: 10px;
     margin: 5px 0;
     border-radius: 10px;
+    min-width: 75px;
     max-width: 70%;
     position: relative;
   }
@@ -22,7 +22,7 @@
   }
   
   .content {
-    margin: 5px 0;
+    margin: 5px 0 15px 0;
   }
   
   .timestamp {
