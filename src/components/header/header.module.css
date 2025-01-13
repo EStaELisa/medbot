@@ -1,7 +1,6 @@
 .header{
     box-sizing: border-box;
-    background-color: hotpink;
-    color: whitesmoke;
+    background-color: var(--header);
     font-size: 30px;
     height: 50px;
     display: flex;
