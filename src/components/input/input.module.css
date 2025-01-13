@@ -4,8 +4,8 @@
     padding: 15px 20px;
     margin-top: 5px;
     box-sizing: border-box;
-    border: 2px solid hotpink;
+    border: 2px solid var(--header);
     border-radius: 15px;
-    background-color: whitesmoke;
-    /* resize: none; */
+    background-color: var(--background);
+    resize: none;
 }

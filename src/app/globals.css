@@ -1,12 +1,18 @@
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
+:root {
+  --background: #fff8fd;
+  --foreground: #171516;
+  --header: #ff8de2;
+  --message_outgoing: #ffc5f1;
+  --message_incoming: #ffe4f9;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f1b30;
+    --foreground: #fbf9ff;
+    --header: #7e9be6;
+    --message_outgoing: #1d3661;
+    --message_incoming: #324c7f;
   }
 }
 
@@ -39,4 +45,4 @@ a {
   html {
     color-scheme: dark;
   }
-} */
+}
