@@ -1,19 +1,23 @@
 import React, { useState } from 'react'
 import styles from './chatMessages.module.css'
+import { Html } from 'next/document';
 
 type props = {
-    sender: String
-    content: String
-    timestamp: number | string | Date
-    isOutgoing: Boolean
+    sender: String;
+    content: String;
+    timestamp: number | string | Date;
+    isOutgoing: Boolean;
+    htmlFile?: string;
 }
 
 const ChatMessages = (props:props) => {
   const messageClass = props.isOutgoing ? styles['outgoing'] : styles['incoming'];
-  const [expanded, setExpanded] = useState(false);
 
   const clickButtonHandler = () => {
-    setExpanded((prev) => !prev);
+    if (!props.htmlFile){
+      return;
+    }
+    window.open(props.htmlFile, '_blank');
   }
   
   return (
@@ -23,10 +27,11 @@ const ChatMessages = (props:props) => {
             {props.sender}
         </div>
 
+        {props.htmlFile}
         {/* Inhalt */}
         <div className={styles['content']}>
             {props.content}
-            {!props.isOutgoing && (
+            {!props.isOutgoing && props.htmlFile &&(
                 <button className={styles['explain_button']} onClick={clickButtonHandler}>
                     <img className={styles['icon']} src={'/question_white.png'}/>
                 </button>
@@ -35,13 +40,6 @@ const ChatMessages = (props:props) => {
 
         {/* Zeit */}
         <div className={styles['timestamp']}>{new Date(props.timestamp).toLocaleTimeString()}</div>
-
-        {/* Aufgeklappte Nachricht mit Explainability Infos */}
-        {expanded && (
-            <div className={styles['expandedContent']}>
-              Hello World
-            </div>
-        )}
     </div>
   )
 }

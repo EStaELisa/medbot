@@ -17,7 +17,7 @@ const Body = (props:props) => {
     <div className={styles['chatContainer']}>
       <div className={styles['messageContainer']}>
         {props.messages.map((msg, idx) => (
-          <ChatMessages key={idx} sender={msg.sender} content={msg.content} timestamp={msg.timeStamp} isOutgoing={msg.isOutgoing}/>
+          <ChatMessages key={idx} sender={msg.sender} content={msg.content} timestamp={msg.timeStamp} isOutgoing={msg.isOutgoing} htmlFile={msg.htmlFile}/>
         ))}
       </div>
       <div ref={messagesEndRef}/>
