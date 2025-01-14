@@ -13,8 +13,17 @@ const ChatMessages = (props:props) => {
   
   return (
     <div className={`${styles['message']} ${messageClass}`}>
-        <div className={styles['sender']}>{props.sender}</div>
-        <div className={styles['content']}>{props.content}</div>
+        <div className={styles['sender']}>
+            {props.sender}
+        </div>
+        <div className={styles['content']}>
+            {props.content}
+            {!props.isOutgoing && (
+                <button className={styles['explain_button']}>
+                    <img className={styles['icon']} src={'/question_white.png'}/>
+                </button>
+            )}
+        </div>
         <div className={styles['timestamp']}>{new Date(props.timestamp).toLocaleTimeString()}</div>
     </div>
   )
