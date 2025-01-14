@@ -38,7 +38,7 @@ const ChatMessages = (props:props) => {
 
         {/* Aufgeklappte Nachricht mit Explainability Infos */}
         {expanded && (
-            <div className={styles.expandedContent}>
+            <div className={styles['expandedContent']}>
               Hello World
             </div>
         )}
