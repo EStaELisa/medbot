@@ -40,7 +40,7 @@ const Input = (props:props) => {
                 style={{overflow: 'hidden'}}
               />           
               <button type="submit" className={styles['button']}>
-                  <img className={styles['icon']} src={'/arrow.png'}/>
+                  <img className={styles['icon']} src={'/double-arrow.png'}/>
               </button>
           </form>
       </div>
