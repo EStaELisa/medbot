@@ -46,7 +46,7 @@
 }
 
 .explain_button:hover{
-  background-color: var(--foreground);
+  background-color: var(--header);
   cursor: pointer;
 }
 
