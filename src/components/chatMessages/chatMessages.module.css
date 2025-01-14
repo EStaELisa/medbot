@@ -3,7 +3,7 @@
     margin: 5px 0;
     border-radius: 10px;
     min-width: 75px;
-    max-width: 70%;
+    max-width: 60%;
     position: relative;
 }
   
@@ -46,7 +46,7 @@
 }
 
 .explain_button:hover{
-  background-color: var(--foreground);
+  background-color: var(--message_outgoing);
   cursor: pointer;
 }
 
