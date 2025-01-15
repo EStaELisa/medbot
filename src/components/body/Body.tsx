@@ -16,6 +16,7 @@ const Body = (props:props) => {
   return (
     <div className={styles['chatContainer']}>
       <div className={styles['messageContainer']}>
+        {/* Auflisten aller Nachrichten */}
         {props.messages.map((msg, idx) => (
           <ChatMessages key={idx} sender={msg.sender} content={msg.content} timestamp={msg.timeStamp} isOutgoing={msg.isOutgoing} htmlFile={msg.htmlFile}/>
         ))}
