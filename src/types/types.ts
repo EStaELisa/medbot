@@ -3,4 +3,5 @@ export type Message = {
     content: string;
     timeStamp: Date;
     isOutgoing: boolean;
+    htmlFile?: string;
 }
