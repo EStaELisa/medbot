@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from './chatMessages.module.css'
-import { Html } from 'next/document';
 
 type props = {
     sender: String;
@@ -27,7 +26,6 @@ const ChatMessages = (props:props) => {
             {props.sender}
         </div>
 
-        {props.htmlFile}
         {/* Inhalt */}
         <div className={styles['content']}>
             {props.content}
