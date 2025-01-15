@@ -21,4 +21,7 @@ docker exec -it devcontainer-db-1 psql -U postgres
 
 Dann Abfragen möglich, Bsp:
 
-SELECT * FROM disease_symptoms LIMIT 50;
+        SELECT Symptoms.name 
+        FROM Symptoms
+        JOIN Diagnoses ON Diagnoses.symptom_id = Symptoms.id
+        WHERE Diagnoses.name IN ('diabetes');
