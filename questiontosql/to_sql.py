@@ -65,7 +65,7 @@ def generate_sql(intent, entities):
         sql_query = f"""
         SELECT disease 
         FROM symptoms_disease
-        WHERE Symptoms LIKE {" OR Symptoms LIKE ".join(f"'%{entity}%'" for entity in entities)};
+        WHERE symptoms LIKE {" OR Symptoms LIKE ".join(f"'%{entity}%'" for entity in entities)};
         """
     else:
         raise ValueError("Unknown intent: " + intent)
