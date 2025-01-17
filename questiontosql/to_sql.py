@@ -57,17 +57,15 @@ def generate_sql(intent, entities):
     """
     if intent == "get_symptoms":
         sql_query = f"""
-        SELECT Symptoms.name 
-        FROM Symptoms
-        JOIN Diagnoses ON Diagnoses.symptom_id = Symptoms.id
-        WHERE Diagnoses.name IN ({', '.join(f"'{entity}'" for entity in entities)});
+        SELECT Symptoms 
+        FROM symptoms_disease
+        WHERE disease IN ({', '.join(f"'{entity}'" for entity in entities)});
         """
     elif intent == "get_diagnose":
         sql_query = f"""
-        SELECT Diagnoses.name 
-        FROM Diagnoses
-        JOIN Symptoms ON Symptoms.id = Diagnoses.symptom_id
-        WHERE Symptoms.name IN ({', '.join(f"'{entity}'" for entity in entities)});
+        SELECT disease 
+        FROM symptoms_disease
+        WHERE Symptoms LIKE {" OR Symptoms LIKE ".join(f"'%{entity}%'" for entity in entities)};
         """
     else:
         raise ValueError("Unknown intent: " + intent)
@@ -132,4 +130,4 @@ if __name__ == "__main__":
         print("Entities:", result["entities"])  
         print(result["sql_query"]) 
     else:
-        print(result["error"])  
+        print(result["error"])
