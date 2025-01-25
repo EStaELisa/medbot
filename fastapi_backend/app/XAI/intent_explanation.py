@@ -3,6 +3,8 @@ import webbrowser
 from lime.lime_text import LimeTextExplainer
 import os
 import torch
+import uuid
+
 
 class ModelWrapper:
     def __init__(self, model, tokenizer, label_map):
@@ -31,6 +33,7 @@ def lime_explanation(model_wrapper, text):
         num_samples=100
     )
 
-    explanation_path = "/tmp/lime_explanation.html"
+    explanationid = uuid.uuid4()
+    explanation_path = "app/static/explanations/" + str(explanationid) + ".html"
     explanation.save_to_file(explanation_path)
-    return "/tmp/lime_explanation.html"
+    return str(explanationid)

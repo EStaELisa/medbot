@@ -13,4 +13,4 @@ def explain(text):
     anonymization_explanation.explain_anonymization(entities)
 
     wrapper = intent_explanation.ModelWrapper(model, tokenizer, {"get_symptoms": 0, "get_diagnose": 1})
-    intent_explanation.lime_explanation(wrapper, anon_text)
+    return intent_explanation.lime_explanation(wrapper, anon_text)

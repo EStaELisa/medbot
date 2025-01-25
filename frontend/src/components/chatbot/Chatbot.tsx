@@ -58,7 +58,7 @@ const Chatbot = () => {
             content: responseData.response_text,
             timeStamp: Date.now(),
             isOutgoing: false,
-            htmlFile: responseData.explain_path
+            htmlFile: 'http://localhost:80/explanation/'+ responseData.explain_path
         };
 
 

@@ -1,10 +1,10 @@
 import os
 import psycopg2
-from typing import Union
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 from pydantic import BaseModel
 
 from app.AnonymizationPipeline import anonymize
@@ -97,9 +97,21 @@ async def read_message(message: Message):
     entities = to_sql.extract_entities(anon_text)
     sql_query = to_sql.generate_sql(intent, entities)
     database_response = generate_result(intent, entities, sql_query)
-    path = explainer.explain(message.text)
+    explanationid = explainer.explain(message.text)
 
     return JSONResponse(
-        content={"status": "success", "response_text": database_response, "explain_path": path},
+        content={"status": "success", "response_text": database_response, "explain_path": explanationid},
         status_code=200
     )
+@app.get("/explanation/{explanationid}")
+async def show_explanation(explanationid):
+    # Path to the HTML file
+    html_file_path = Path("app/static/explanations/" + explanationid + ".html")
+
+    # Read the HTML file
+    if html_file_path.exists():
+        html_content = html_file_path.read_text(encoding="utf-8")
+        return HTMLResponse(content=html_content)
+    else:
+        return HTMLResponse(content="<h1>File not found</h1>", status_code=404)
+
