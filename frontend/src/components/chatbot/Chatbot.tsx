@@ -38,7 +38,7 @@ const Chatbot = () => {
     setNewMessageText("");
     try {
         // Send the message to the server
-        const response = await fetch("http://localhost:80/message/", {
+        const response = await fetch("http://localhost:80/medbot-api/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -55,7 +55,7 @@ const Chatbot = () => {
         // Construct the new message object locally for the UI
         const answerMessage  = {
             sender: "MedChat",
-            content: responseData.intent + '\n' + responseData.entities + '\n' + responseData.sql_query + '                '  + responseData.anon_text,
+            content: responseData.response_text,
             timeStamp: Date.now(),
             isOutgoing: false
         };

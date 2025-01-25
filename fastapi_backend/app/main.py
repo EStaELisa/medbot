@@ -62,11 +62,11 @@ def connect_and_query(generated_query):
 
 def generate_result(intent, entities, generated_query):
     db_answer = connect_and_query(generated_query)
-
+    clean_response = stringify_database_response(db_answer)
     if intent == "get_symptoms":
-        response = f"The symptoms for {', '.join(entities)} are: {db_answer}"
+        response = f"The symptoms for {', '.join(entities)} are: {clean_response}"
     elif intent == "get_diagnose":
-        response = f"Possible diagnoses for the symptoms {', '.join(entities)} are: {db_answer}"
+        response = f"Possible diagnoses for the symptoms {', '.join(entities)} are: {clean_response}"
     return response
 
 class Message(BaseModel):
@@ -83,12 +83,13 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+def stringify_database_response(database_array):
+    clean_response = ""
+    for element in database_array:
+        clean_response += "{}, ".format(element[0])
+    return clean_response[:-2]
 
-
-@app.post("/message/")
+@app.post("/medbot-api/")
 async def read_message(message: Message):
     anon_text, entities = anonymize.anonymize_prompt(message.text)
     intent = to_sql.predict_intent(anon_text)
@@ -96,11 +97,6 @@ async def read_message(message: Message):
     sql_query = to_sql.generate_sql(intent, entities)
     database_response = generate_result(intent, entities, sql_query)
     return JSONResponse(
-        content={"status": "success", "intent": intent, "entities": entities, "sql_query": sql_query, "anon_text": database_response},
+        content={"status": "success", "response_text": database_response},
         status_code=200
     )
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
