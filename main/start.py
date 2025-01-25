@@ -1,4 +1,4 @@
-from questiontosql.to_sql import predict_intent, extract_entities, generate_sql
+from fastapi_backend.app.questiontosql import predict_intent, extract_entities, generate_sql
 
 
 def start(query):

@@ -1,5 +1,5 @@
 import pytest
-from questiontosql.to_sql import handle_query, predict_intent, extract_entities, generate_sql
+from fastapi_backend.app.questiontosql import handle_query, predict_intent, extract_entities, generate_sql
 
 # **Test predict_intent**
 

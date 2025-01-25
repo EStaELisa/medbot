@@ -35,7 +35,7 @@ def import_data_to_postgres():
     table_exists = cur.fetchone()[0]
 
     if table_exists:
-        print("Daten ist schon im System!")
+        print("Daten sind schon im System!")
     else:
         # Create table if it doesn't exist
         cur.execute("""

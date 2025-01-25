@@ -1,5 +1,5 @@
 import pytest
-from questiontosql.transform_prediction_symp_dia import predict, transform_predictions
+from fastapi_backend.app.questiontosql.transform_prediction_symp_dia import predict, transform_predictions
 
 # Mock test cases for the predict function
 

@@ -55,7 +55,7 @@ const Chatbot = () => {
         // Construct the new message object locally for the UI
         const answerMessage  = {
             sender: "MedChat",
-            content: responseData.message_received,
+            content: responseData.intent + '\n' + responseData.entities + '\n' + responseData.sql_query + '                '  + responseData.anon_text,
             timeStamp: Date.now(),
             isOutgoing: false
         };

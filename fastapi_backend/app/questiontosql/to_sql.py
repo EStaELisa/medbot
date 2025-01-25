@@ -1,6 +1,6 @@
 import torch
 from transformers import BertForSequenceClassification, BertTokenizer
-from questiontosql.transform_prediction_symp_dia import predict, transform_predictions
+from app.questiontosql.transform_prediction_symp_dia import predict, transform_predictions
 
 # **Intent-Model**
 MODEL_PATH_INTENT = "DeliaMo/ner_intent"
@@ -58,13 +58,13 @@ def generate_sql(intent, entities):
     if intent == "get_symptoms":
         sql_query = f"""
         SELECT Symptoms 
-        FROM symptoms_disease
+        FROM disease_symptoms
         WHERE disease IN ({', '.join(f"'{entity}'" for entity in entities)});
         """
     elif intent == "get_diagnose":
         sql_query = f"""
         SELECT disease 
-        FROM symptoms_disease
+        FROM disease_symptoms
         WHERE symptoms LIKE {" OR Symptoms LIKE ".join(f"'%{entity}%'" for entity in entities)};
         """
     else:
