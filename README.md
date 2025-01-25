@@ -12,7 +12,9 @@ for vs code: blue button at the left button corner -> reload container
 # Container builden
 -Docker + Docker Compose installieren, dann Container buiolden mit:
 
-docker-compose -f .devcontainer/docker-compose.yml up --build
+Im Hauptordner von Medbot folgenden Befehl ausführen
+
+`docker compose -f .dockerisation/docker-compose.yml up --build`
 
 SQL DB wird erstellt und per Skript (import_data_sql.py) gefüllt mit Daten aus nhs_disease_symptoms_processed_final.csv
 

@@ -25,10 +25,17 @@ services:
 
   frontend:
     build:
-      context: ..
-      dockerfile: .dockerisation/dockerfiles/frontend/Dockerfile
+      context: ../frontend
+      dockerfile: ../.dockerisation/dockerfiles/frontend/Dockerfile
     ports:
       - 3000:3000
+
+  fastapibackend:
+    build:
+      context: ../fastapi_backend
+      dockerfile: ../.dockerisation/dockerfiles/backend_api/Dockerfile
+    ports:
+      - 80:80
 
   db:
     image: postgres:latest

@@ -1,8 +1,8 @@
 FROM node:18
 WORKDIR /app
-COPY ../../frontend/package*.json ./
+COPY ./package*.json ./
 RUN npm install
-COPY ../../../frontend .
+COPY . .
 ENV TZ="Europe/Berlin"
 EXPOSE 3000
 CMD ["npm", "run", "dev"]
