@@ -1,5 +1,7 @@
 
 def explain_anonymization(entities):
-    print("text, label, confidence")
     for entity in entities:
-        print(entity['text'], ",", entity['entity'], ",", entity['confidence'])
+        print("Entity: ", entity['text'], "| Type:", entity['entity'], "| Confidence:", f"{entity['confidence']:.2f}")
+
+def print_anon_text(text):
+    print(text)
