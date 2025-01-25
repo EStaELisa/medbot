@@ -9,6 +9,7 @@ from pydantic import BaseModel
 
 from app.AnonymizationPipeline import anonymize
 from app.questiontosql import to_sql
+from app.XAI import explainer
 
 db_host = os.getenv("PGHOST", "db")
 db_name = os.getenv("PGDATABASE", "postgres")
@@ -96,7 +97,9 @@ async def read_message(message: Message):
     entities = to_sql.extract_entities(anon_text)
     sql_query = to_sql.generate_sql(intent, entities)
     database_response = generate_result(intent, entities, sql_query)
+    path = explainer.explain(message.text)
+
     return JSONResponse(
-        content={"status": "success", "response_text": database_response},
+        content={"status": "success", "response_text": database_response, "explain_path": path},
         status_code=200
     )

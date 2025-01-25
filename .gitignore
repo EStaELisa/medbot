@@ -742,4 +742,4 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # Temporal explanation files
-XAI/tmp/lime_explanation.html
+fastapi_backend/app/XAI/tmp/lime_explanation.html

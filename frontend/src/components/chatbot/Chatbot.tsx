@@ -57,7 +57,8 @@ const Chatbot = () => {
             sender: "MedChat",
             content: responseData.response_text,
             timeStamp: Date.now(),
-            isOutgoing: false
+            isOutgoing: false,
+            htmlFile: responseData.explain_path
         };
 
 

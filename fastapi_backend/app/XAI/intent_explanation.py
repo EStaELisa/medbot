@@ -31,7 +31,6 @@ def lime_explanation(model_wrapper, text):
         num_samples=100
     )
 
-    explanation_path = "../XAI/tmp/lime_explanation.html"
+    explanation_path = "/tmp/lime_explanation.html"
     explanation.save_to_file(explanation_path)
-    # TODO change default html application
-    webbrowser.get("firefox").open(f"file://{os.path.abspath(explanation_path)}")
+    return "/tmp/lime_explanation.html"
