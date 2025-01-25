@@ -11,7 +11,7 @@ db_password = os.getenv("PGPASSWORD", "postgres")
 db_port = os.getenv("PGPORT", "5432")
 
 # CSV file path
-csv_file = "nhs_disease_symptoms_processed_final.csv"
+csv_file = "data/nhs_disease_symptoms_processed_final.csv"
 
 def import_data_to_postgres():
     # Connect to PostgreSQL
