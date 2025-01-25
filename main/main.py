@@ -1,4 +1,4 @@
-from AnonymizationPipeline import anonymize
+from fastapi_backend.app.AnonymizationPipeline import anonymize
 from XAI import anonymization_explanation, intent_explanation
 from transformers import BertForSequenceClassification, BertTokenizer
 

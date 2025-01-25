@@ -1,9 +1,4 @@
-
-
-from transformers import AutoTokenizer, AutoModelForTokenClassification, TrainingArguments, Trainer, pipeline
-from datasets import load_dataset
-from transformers import DataCollatorForTokenClassification
-from AnonymizationPipeline.NERModelTrainer import NERModelTrainer
+from fastapi_backend.app.AnonymizationPipeline.NERModelTrainer import NERModelTrainer
 
 # Beispielanwendung
 if __name__ == "__main__":

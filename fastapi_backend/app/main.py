@@ -6,6 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
+from app.AnonymizationPipeline import anonymize
+
 
 class Message(BaseModel):
     text: str
@@ -28,8 +30,9 @@ def read_root():
 
 @app.post("/message/")
 async def read_message(message: Message):
+    anon_text, entities = anonymize.anonymize_prompt(message.text)
     return JSONResponse(
-        content={"status": "success", "message_received": message.text},
+        content={"status": "success", "message_received": anon_text},
         status_code=200
     )
 
