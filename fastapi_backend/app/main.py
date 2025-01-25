@@ -7,9 +7,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, HTMLResponse
 from pydantic import BaseModel
 
-from app.AnonymizationPipeline import anonymize
-from app.questiontosql import to_sql
-from app.XAI import explainer
+from fastapi_backend.app.AnonymizationPipeline import anonymize
+from fastapi_backend.app.questiontosql import to_sql
+from fastapi_backend.app.XAI import explainer
 
 db_host = os.getenv("PGHOST", "db")
 db_name = os.getenv("PGDATABASE", "postgres")
@@ -106,7 +106,7 @@ async def read_message(message: Message):
 @app.get("/explanation/{explanationid}")
 async def show_explanation(explanationid):
     # Path to the HTML file
-    html_file_path = Path("app/static/explanations/" + explanationid + ".html")
+    html_file_path = Path("fastapi_backend/app/static/explanations/" + explanationid + ".html")
 
     # Read the HTML file
     if html_file_path.exists():

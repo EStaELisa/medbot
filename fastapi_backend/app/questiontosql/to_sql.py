@@ -1,6 +1,6 @@
 import torch
 from transformers import BertForSequenceClassification, BertTokenizer
-from app.questiontosql.transform_prediction_symp_dia import predict, transform_predictions
+from fastapi_backend.app.questiontosql.transform_prediction_symp_dia import predict, transform_predictions
 
 # for running tests locally
 # from fastapi_backend.app.questiontosql.transform_prediction_symp_dia import predict, transform_predictions

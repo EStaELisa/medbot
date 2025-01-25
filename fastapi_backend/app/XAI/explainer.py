@@ -1,6 +1,6 @@
 from transformers import BertForSequenceClassification, BertTokenizer
-from app.AnonymizationPipeline import (anonymize)
-from app.XAI import intent_explanation, anonymization_explanation
+from fastapi_backend.app.AnonymizationPipeline import (anonymize)
+from fastapi_backend.app.XAI import intent_explanation, anonymization_explanation
 
 def explain(text):
     model_path = "DeliaMo/ner_intent"

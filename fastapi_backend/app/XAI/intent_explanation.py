@@ -34,6 +34,6 @@ def lime_explanation(model_wrapper, text):
     )
 
     explanationid = uuid.uuid4()
-    explanation_path = "app/static/explanations/" + str(explanationid) + ".html"
+    explanation_path = "fastapi_backend/app/static/explanations/" + str(explanationid) + ".html"
     explanation.save_to_file(explanation_path)
     return str(explanationid)
