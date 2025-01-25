@@ -22,21 +22,51 @@ const Chatbot = () => {
     const [messages, setMessages] = useState([{ sender: 'MedChat', content: 'Hallo, wie kann ich helfen?', timeStamp: Date.now(), isOutgoing: false }]);
     const [newMessageText, setNewMessageText] = useState("");
 
-    const onSendMessageHandler = () => {
-        if (newMessageText.trim() === ""){
+    const onSendMessageHandler = async () => {
+    if (newMessageText.trim() === "") {
+        return;
+    }
+
+    const newMessage = {
+      sender: "Me",
+      content: newMessageText,
+      timeStamp: Date.now(),
+      isOutgoing: true
+    };
+
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    setNewMessageText("");
+    try {
+        // Send the message to the server
+        const response = await fetch("http://localhost:80/message/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ text: newMessageText }) // Request body with the correct format
+        });
+
+        if (!response.ok) {
+            console.error("Failed to send the message", response.statusText);
             return;
         }
-
-        const newMessage = {
-            sender: "Me",
-            content: newMessageText,
+        const responseData = await response.json();
+        console.log("Response from server:", responseData);
+        // Construct the new message object locally for the UI
+        const answerMessage  = {
+            sender: "MedChat",
+            content: responseData.message_received,
             timeStamp: Date.now(),
-            isOutgoing: true
+            isOutgoing: false
         };
 
-        setMessages((prevMessages) => [... prevMessages, newMessage])
-        setNewMessageText("");
+
+        // Update the local messages state
+        setMessages((prevMessages) => [...prevMessages, answerMessage]);
+    } catch (error) {
+        console.error("Error sending the message:", error);
     }
+    };
 
     return (
         <div className={styles['chatbot']}>
