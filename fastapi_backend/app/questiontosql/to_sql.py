@@ -1,6 +1,7 @@
 import torch
 from transformers import BertForSequenceClassification, BertTokenizer
 from fastapi_backend.app.questiontosql.transform_prediction_symp_dia import predict, transform_predictions
+import re
 
 # for running tests locally
 # from fastapi_backend.app.questiontosql.transform_prediction_symp_dia import predict, transform_predictions
@@ -43,6 +44,8 @@ def extract_entities(query):
     Returns:
         List[str]: A list of extracted entities.
     """
+    # Cut anonymised entities out of the query because the model recognized them as entities for symptoms / diagnoses
+    query = re.sub(r"<.+?>", "", query)
     predictions = predict(query)
     structured_data = transform_predictions(predictions)
     return [entity["text"] for entity in structured_data["entities"]]
@@ -63,7 +66,7 @@ def generate_sql(intent, entities):
         sql_query = f"""
         SELECT Symptoms 
         FROM disease_symptoms
-        WHERE disease IN ({', '.join(f"'{entity}'" for entity in entities)});
+        WHERE disease LIKE ({', '.join(f"'{entity}'" for entity in entities)});
         """
     elif intent == "get_diagnose":
         sql_query = f"""

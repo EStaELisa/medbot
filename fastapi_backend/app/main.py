@@ -27,6 +27,7 @@ def connect_and_query(generated_query):
         'host': db_host,
         'port': db_port,
     }
+    results = ""
 
     try:
         # Establish the connection
@@ -64,6 +65,7 @@ def connect_and_query(generated_query):
 def generate_result(intent, entities, generated_query):
     db_answer = connect_and_query(generated_query)
     clean_response = stringify_database_response(db_answer)
+    response = ""
     if intent == "get_symptoms":
         response = f"The symptoms for {', '.join(entities)} are: {clean_response}"
     elif intent == "get_diagnose":
@@ -92,12 +94,12 @@ def stringify_database_response(database_array):
 
 @app.post("/medbot-api/")
 async def read_message(message: Message):
-    anon_text, entities = anonymize.anonymize_prompt(message.text)
+    anon_text, anon_entities = anonymize.anonymize_prompt(message.text)
     intent = to_sql.predict_intent(anon_text)
     entities = to_sql.extract_entities(anon_text)
     sql_query = to_sql.generate_sql(intent, entities)
     database_response = generate_result(intent, entities, sql_query)
-    explanationid = explainer.explain(message.text)
+    explanationid = explainer.explain(anon_text, anon_entities)
 
     return JSONResponse(
         content={"status": "success", "response_text": database_response, "explain_path": explanationid},
