@@ -117,3 +117,6 @@ async def show_explanation(explanationid):
     else:
         return HTMLResponse(content="<h1>File not found</h1>", status_code=404)
 
+@app.get("/health")
+def health_check():
+    return {"status": "healthy"}
