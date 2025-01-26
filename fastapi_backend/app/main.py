@@ -99,7 +99,7 @@ async def read_message(message: Message):
     entities = to_sql.extract_entities(anon_text)
     sql_query = to_sql.generate_sql(intent, entities)
     database_response = generate_result(intent, entities, sql_query)
-    explanationid = explainer.explain(anon_text, anon_entities)
+    explanationid = explainer.explain(message.text, anon_text, anon_entities)
 
     return JSONResponse(
         content={"status": "success", "response_text": database_response, "explain_path": explanationid},
