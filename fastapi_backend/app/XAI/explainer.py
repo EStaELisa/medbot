@@ -1,8 +1,8 @@
 from transformers import BertForSequenceClassification, BertTokenizer
 import uuid
-from fastapi_backend.app.XAI import intent_explanation, anonymization_explanation
+from fastapi_backend.app.XAI import intent_explanation, anonymization_explanation, sql_explanation
 
-def explain(text, anon_text, entities):
+def explain(text, anon_text, entities, sql_query):
     model_path = "DeliaMo/ner_intent"
     model = BertForSequenceClassification.from_pretrained(model_path)
     tokenizer = BertTokenizer.from_pretrained(model_path)
@@ -16,10 +16,13 @@ def explain(text, anon_text, entities):
     explanationid = uuid.uuid4()
     explanation_path = "fastapi_backend/app/static/explanations/" + str(explanationid) + ".html"
     intent_html = intent_explanation.lime_explanation(wrapper, anon_text)
-    create_combined_explanation(text, anon_text, entities, intent_html, explanation_path)
+
+    sql_ex = sql_explanation.explain_sql_query(sql_query)
+
+    create_combined_explanation(text, anon_text, entities, intent_html, explanation_path, sql_query, sql_ex)
     return str(explanationid)
 
-def create_combined_explanation(text, anon_text, entities, intent_html, path):
+def create_combined_explanation(text, anon_text, entities, intent_html, path, sql_query, sql_ex):
     """
     Generate a single HTML file with explanations for anonymization and LIME explanations.
 
@@ -38,7 +41,7 @@ def create_combined_explanation(text, anon_text, entities, intent_html, path):
         <title>Explanations</title>
         <style>
             body {{
-            front-family: Arial, sans-serif;
+            font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 5px;
             padding: 5px;
@@ -77,7 +80,15 @@ def create_combined_explanation(text, anon_text, entities, intent_html, path):
             <ul>
     """
     for entity in entities:
-        html_content += f"<li>Entity: {entity['text']} | Type: {entity['entity']} | Confidence: {entity['confidence']:.2f}</li>"
+        confidence = entity['confidence']
+        if confidence > 0.9:
+            explanation = "The model is very confident."
+        elif confidence > 0.7:
+            explanation = "The model is somewhat confident, but there is some uncertainty."
+        else:
+            explanation = "The model is not very confident; this could be a random prediction."
+
+        html_content += f"<li>Entity: {entity['text']} | Type: {entity['entity']} | Confidence: {entity['confidence']:.2f} | {explanation}</li>"
     html_content += """
             </ul>
 
@@ -85,7 +96,11 @@ def create_combined_explanation(text, anon_text, entities, intent_html, path):
     """
     html_content += f"<div>{intent_html}</div>"
     html_content += """
-        </div>
+    <h2>SQL Query</h2>
+            <p><strong>Generated SQL Query:</strong></p>
+            <div class="code">{sql_query.replace('<', '&lt;').replace('>', '&gt;')}</div>
+            <p><strong>SQL Explanation:</strong></p>
+            <div class="code">{sql_ex.replace('<', '&lt;').replace('>', '&gt;')}</div>
     </body>
     </html>
     """
