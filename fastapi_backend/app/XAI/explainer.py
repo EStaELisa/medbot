@@ -17,12 +17,10 @@ def explain(text, anon_text, entities, sql_query):
     explanation_path = "fastapi_backend/app/static/explanations/" + str(explanationid) + ".html"
     intent_html = intent_explanation.lime_explanation(wrapper, anon_text)
 
-    #sql_ex = sql_explanation.explain_sql_query(sql_query)
-
-    create_combined_explanation(text, anon_text, entities, intent_html, explanation_path, sql_query, sql_ex)
+    create_combined_explanation(text, anon_text, entities, intent_html, explanation_path, sql_query)
     return str(explanationid)
 
-def create_combined_explanation(text, anon_text, entities, intent_html, path, sql_query, sql_ex):
+def create_combined_explanation(text, anon_text, entities, intent_html, path, sql_query):
     """
     Generate a single HTML file with explanations for anonymization and LIME explanations.
 
@@ -32,9 +30,8 @@ def create_combined_explanation(text, anon_text, entities, intent_html, path, sq
     - anonymized_text: The text after anonymization.
     - entities: List of entities with confidence scores.
     """
-    # Escape HTML special characters for SQL query and explanation
+
     safe_sql_query = sql_query.replace('<', '&lt;').replace('>', '&gt;')
-    #safe_sql_ex = sql_ex.replace('<', '&lt;').replace('>', '&gt;')
 
     html_content = f"""
     <!DOCTYPE html>
