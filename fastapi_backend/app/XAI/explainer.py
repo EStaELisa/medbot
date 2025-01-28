@@ -1,6 +1,6 @@
 from transformers import BertForSequenceClassification, BertTokenizer
 import uuid
-from fastapi_backend.app.XAI import intent_explanation, anonymization_explanation, sql_explanation
+from fastapi_backend.app.XAI import intent_explanation, anonymization_explanation
 
 def explain(text, anon_text, entities, sql_query):
     model_path = "DeliaMo/ner_intent"
