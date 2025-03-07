@@ -10,6 +10,7 @@ Install the required Python packages:
 
 ```bash
 pip install -r requirements.txt
+```
 
 
 ### Key Points for Llama 3:
@@ -18,14 +19,17 @@ pip install -r requirements.txt
 
 - After installation: you still need to install the llama3 model and run it so that it starts the server.
 ```bash
-
 ollama pull llama3
+```
+
 ```bash
 ollama run llama3 
+```
 
 After these steps, continue to the part to clean the data used in the main project bot. Here we also use the dataset sourced from NHS. 
 ```bash
 python clean.py
+```
 
 Individual Disease Files as Knowledge Base:
 The disease files now act as the “knowledge base” for your RAG system. When the query engine (from main.py) looks for relevant documents, it will search through this knowledge base, retrieve the most relevant document, and use that information to augment the response generation. 
@@ -34,6 +38,7 @@ finally, we are ready to test the bot.
 
 ```bash
 python main.py
+```
 
 
 Example: 
