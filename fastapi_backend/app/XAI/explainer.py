@@ -3,11 +3,26 @@ import uuid
 from fastapi_backend.app.XAI import intent_explanation, anonymization_explanation
 
 def explain(text, anon_text, entities, sql_query):
+    """
+    Generates an explanation for a given input text by analyzing anonymization, intent classification and SQL query generation.
+
+    Args:
+        text (str): The original user input.
+        anon_text (str): The anonymized version of the user input.
+        entities (list): A list of extracted entities with confidence scores.
+        sql_query (str): The SQL query based on the input text.
+
+    Returns:
+        str: A unique identifier for the generated explanation file.
+
+    The function loads a fine-tuned BERT model for intent classification, applies anonymization explanations, and generates
+    an explanation for the intent classification using LIME. It then creates a combined explanation file containgin all
+    relevant components.
+    """
     model_path = "DeliaMo/ner_intent"
     model = BertForSequenceClassification.from_pretrained(model_path)
     tokenizer = BertTokenizer.from_pretrained(model_path)
 
-    #text = "The patient Julia Meyer is suffering from fever and chills, what could her diagnose be? Call her back at +491110020"
     anonymization_explanation.print_anon_text(anon_text)
     anonymization_explanation.explain_anonymization(entities)
 
