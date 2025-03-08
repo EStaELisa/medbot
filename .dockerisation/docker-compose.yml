@@ -1,6 +1,5 @@
-#version: '3.8'
-
 services:
+  # Service responsible for importing data into the database
   dataimporter:
     build:
       context: ..
@@ -17,12 +16,11 @@ services:
       PGPASSWORD: postgres
       PGHOST: db
       PGPORT: 5432
-    # Overrides default command so things don't shut down after the process ends.
+    # Ensures the container does not exit after the process ends
     command: ["bash", "-c", "python import_data_sql.py && sleep infinity"]
     network_mode: service:db
-    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
 
+  # Frontend service running on port 3000
   frontend:
     build:
       context: ../frontend
@@ -33,6 +31,7 @@ services:
       fastapibackend:
         condition: service_healthy
 
+  # Backend service running FastAPI on port 80
   fastapibackend:
     build:
       context: ../fastapi_backend
@@ -45,12 +44,14 @@ services:
       PGPORT: 5432
     ports:
       - 80:80
+    # Health check to ensure service availability
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:80/health" ]
       interval: 10s
       timeout: 5s
       retries: 30
 
+  # PostgreSQL database service
   db:
     image: postgres:latest
     restart: unless-stopped
@@ -71,5 +72,6 @@ services:
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
+# Define persistent storage for the database
 volumes:
   postgres-data:
