@@ -189,6 +189,8 @@ class NERModelTrainer:
 
 
 if __name__ == "__main__":
+    """main skript for model training."""
+
     pretrained_model = "dbmdz/bert-large-cased-finetuned-conll03-english"
     label_list = ["0", "PER", "ORG", "GPE", "EMAIL", "PHONE"]
     data_files = {

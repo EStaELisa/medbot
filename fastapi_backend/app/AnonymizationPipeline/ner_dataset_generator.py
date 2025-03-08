@@ -175,8 +175,6 @@ if __name__ == "__main__":
     )
     if not os.path.exists("data/ner_train_data.txt") or not os.path.exists("data/ner_test_data.txt"):
         FileWriter.write_to_file(train_data, "data/ner_train_data.txt")
-        #processor.process_file("data/ner_train_data_raw.txt", "data/ner_train_data.txt")
         FileWriter.write_to_file(test_data, "data/ner_test_data.txt")
-        #processor.process_file("data/ner_test_data_raw.txt", "data/ner_test_data.txt")
     else:
         print("Files already exist")

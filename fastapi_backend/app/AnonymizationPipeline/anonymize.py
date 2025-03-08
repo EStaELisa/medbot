@@ -160,7 +160,13 @@ class NERAnonymizer:
         return replacements.get(entity_type, '<ENTITY>')
 
 def anonymize_prompt(text):
-    # Path to your fine-tuned model
+    """
+    Anonymize the text by replacing identified entities with placeholders.
+    :param text: The input text to anonymize.
+    :return: The anonymized text with entities replaced by placeholders like <PERSON>, <LOCATION>, <ORG>, <EMAIL> and
+        the entities found in the text.
+    """
+    # Path to the fine-tuned model
     model_path = "DeliaMo/ner_anonymization"
 
     # Instantiate and use the anonymizer
