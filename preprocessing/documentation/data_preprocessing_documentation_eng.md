@@ -1,6 +1,6 @@
 # Data Preprocessing and Symptom Extraction 
 
-### Contribution by: Zeineb Souiai
+#### Contribution by: Zeineb Souiai
 
 As part of our project, I was responsible for designing and implementing the data preprocessing pipeline. My goal was to extract meaningful and structured symptom information from unstructured medical text.
 
