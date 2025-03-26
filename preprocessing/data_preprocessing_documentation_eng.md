@@ -33,7 +33,7 @@ The `WordNetLemmatizer` from NLTK was used to standardize tokens to their root f
 - Final dataset only included clean, structured disease–symptom entries, saved to CSV.
 
 ## Script Iterations
-Throughout the project, I experimented with multiple Python scripts to refine the extraction logic and optimize results. Early versions like nhs_prep.py, and preprocessing.py were used to test different libraries and symptom-matching strategies. These versions helped me identify the limitations of certain tools (e.g., SpaCy’s NER in our context) and iteratively improve the logic. The final working implementation was consolidated in prep_symptom_to_disease.py, which contains the fully functional, optimized code used in the final pipeline.
+Throughout the project, I experimented with multiple Python scripts to refine the extraction logic and optimize results. Early versions like nhs_prep.py, and preprocessing.py were used to test different libraries and symptom-matching strategies. These versions helped me identify the limitations of certain tools and iteratively improve the logic. The final working implementation was consolidated in prep_symptom_to_disease.py, which contains the fully functional, optimized code used in the final pipeline.
 
 ## Final Remarks
 The preprocessing and extraction pipeline developed contributed to structuring raw medical text into clean symptom–disease pairs, tailored for use in our chatbot’s database and downstream machine learning tasks. The process involved a combination of rule-based, pattern-based, and lexical techniques, all optimized to suit the specific characteristics of the NHS dataset.
