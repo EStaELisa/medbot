@@ -33,7 +33,7 @@ Der `WordNetLemmatizer` aus NLTK wurde verwendet, um Token auf ihre Stammform zu
 - Der endgültige Datensatz enthielt nur saubere, strukturierte Krankheits-Symptom-Einträge, die im CSV-Format gespeichert wurden.
 
 ## Skript-Iterationen
-Während des gesamten Projekts habe ich mit mehreren Python-Skripten experimentiert, um die Extraktionslogik zu verfeinern und die Ergebnisse zu optimieren. Frühe Versionen wie nhs_prep.py und preprocessing.py wurden verwendet, um verschiedene Bibliotheken und Strategien für die Symptomzuordnung zu testen. Diese Versionen halfen mir, die Grenzen bestimmter Tools (z. B. SpaCys NER in unserem Kontext) zu erkennen und die Logik iterativ zu verbessern. Die endgültige Arbeitsimplementierung wurde in prep_symptom_to_disease.py zusammengefasst, die den voll funktionsfähigen, optimierten Code enthält, der in der endgültigen Pipeline verwendet wird.
+Während des gesamten Projekts habe ich mit mehreren Python-Skripten experimentiert, um die Extraktionslogik zu verfeinern und die Ergebnisse zu optimieren. Frühe Versionen wie nhs_prep.py und preprocessing.py wurden verwendet, um verschiedene Bibliotheken und Strategien für die Symptomzuordnung zu testen. Diese Versionen halfen mir, die Grenzen bestimmter Tools zu erkennen und die Logik iterativ zu verbessern. Die endgültige Arbeitsimplementierung wurde in prep_symptom_to_disease.py zusammengefasst, die den voll funktionsfähigen, optimierten Code enthält, der in der endgültigen Pipeline verwendet wird.
 
 
 
