@@ -1,6 +1,6 @@
 # Datenvorverarbeitung und Symptomextraktion 
 
-### Beitrag von: Zeineb Souiai
+#### Beitrag von: Zeineb Souiai
 
 Im Rahmen unseres Projekts war ich für den Entwurf und die Implementierung der Datenvorverarbeitungspipeline verantwortlich. Mein Ziel war es, aussagekräftige und strukturierte Symptominformationen aus unstrukturierten medizinischen Texten zu extrahieren.
 
